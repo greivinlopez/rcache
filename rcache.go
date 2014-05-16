@@ -4,18 +4,20 @@ import (
 	"encoding/json"
 	"errors"
 	"github.com/garyburd/redigo/redis"
+	"os"
 	"time"
 )
 
 var (
 	redisPool     *redis.Pool
 	redisServer   = "127.0.0.1:6379"
-	redisPassword = "2a8RQ96jSwCIp9jWEzyPDUy8CSDx3db5FMNh6RSu2FXi3pIOGR5kox11SnmNTbOxkPXqUzOA8ytaH61Q"
+	redisPassword = ""
 )
 var ErrCantConnect = errors.New("Can't connect to redis")
 
 func dial() (redis.Conn, error) {
 	if redisPool == nil {
+		redisPassword = os.Getenv("RCACHE_REDIS_PASS")
 		redisPool = &redis.Pool{
 			MaxIdle:     3,
 			IdleTimeout: 240 * time.Second,
