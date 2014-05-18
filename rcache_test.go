@@ -67,3 +67,21 @@ func TestBsonIds(t *testing.T) {
 		t.Errorf("Invalid value returned by GET %v", value)
 	}
 }
+
+func TestDel(t *testing.T) {
+	key := "delkey"
+	value := &TaxiDriver{"Greivin", "López", "Paniagua", "205480941", "greivin.lopez@gmail.com", "24410131", "88684734", ""}
+
+	err := Set(key, value)
+	if err != nil {
+		t.Errorf("Throwing error in Set(key, value): %v", err)
+	}
+
+	err = Del(key)
+
+	valueRead := &TaxiDriver{}
+	err = Get(key, &valueRead)
+	if err == nil {
+		t.Errorf("Failed to delete from Redis: %v", key)
+	}
+}

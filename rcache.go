@@ -125,3 +125,14 @@ func Get(key interface{}, entityPointer interface{}) error {
 	err = json.Unmarshal([]byte(jsonvalue), entityPointer)
 	return err
 }
+
+func Del(key interface{}) error {
+	c, err := dial()
+	if err != nil {
+		return err
+	}
+	defer c.Close()
+
+	c.Do("DEL", key)
+	return nil
+}
