@@ -94,7 +94,7 @@ func dial() (redis.Conn, error) {
 	return nil, ErrCantConnect
 }
 
-func Set(key string, value interface{}) error {
+func Set(key interface{}, value interface{}) error {
 	c, err := dial()
 	if err != nil {
 		return err
@@ -110,7 +110,7 @@ func Set(key string, value interface{}) error {
 	return nil
 }
 
-func Get(key string, entityPointer interface{}) error {
+func Get(key interface{}, entityPointer interface{}) error {
 	c, err := dial()
 	if err != nil {
 		return err

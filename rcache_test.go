@@ -1,6 +1,7 @@
 package rcache
 
 import (
+	"labix.org/v2/mgo/bson"
 	"testing"
 )
 
@@ -46,5 +47,23 @@ func TestGet(t *testing.T) {
 	err = Get("notexist", &value)
 	if err == nil {
 		t.Errorf("Not returning error when key not exist: %v", err)
+	}
+}
+
+func TestBsonIds(t *testing.T) {
+	key := bson.NewObjectId()
+	value := &TaxiDriver{"Georges", "Bizet", "", "203330222", "georges.bizet@gmail.com", "24410131", "88684734", ""}
+	err := Set(key, value)
+	if err != nil {
+		t.Errorf("Throwing error in Set(key, value) when using bson object: %v", err)
+	}
+
+	valueRead := &TaxiDriver{}
+	err = Get(key, &valueRead)
+	if err != nil {
+		t.Errorf("Throwing error in Get(key, value) when using bson object: %v", err)
+	}
+	if valueRead.FirstName != "Georges" {
+		t.Errorf("Invalid value returned by GET %v", value)
 	}
 }
