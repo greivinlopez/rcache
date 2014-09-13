@@ -126,7 +126,7 @@ func Get(key interface{}, entityPointer interface{}) error {
 	return err
 }
 
-func Del(key interface{}) error {
+func Delete(key interface{}) error {
 	c, err := dial()
 	if err != nil {
 		return err
